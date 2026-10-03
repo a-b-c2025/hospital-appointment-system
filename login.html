@@ -1,43 +1,64 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Patient Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | City Care Hospital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
-<header>
-    <h1>Patient Login</h1>
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="/index.html">
+            <span class="cross" aria-hidden="true"></span>
+            <span>City Care Hospital<small>Online appointments</small></span>
+        </a>
+        <nav aria-label="Main">
+            <a href="/index.html">Home</a>
+            <a href="/doctors.html">Doctors</a>
+            <a href="/appointment.html">Book appointment</a>
+            <a href="/my_appointments">My appointments</a>
+            <a href="/register.html">Register</a>
+            <a href="/login.html" class="active" aria-current="page">Login</a>
+            <a href="/admin_login.html">Admin</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
 </header>
 
 <main>
 
-    <h2>Patient Login</h2>
+    <div class="page-title">
+        <h1>Patient login</h1>
+        <p>Use the email and mobile number you registered with.</p>
+    </div>
 
-    <form action="/login" method="POST">
+    <form class="form-card" action="/login" method="POST">
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="you@example.com" required>
+        </div>
 
-        <label>Email:</label><br>
-        <input type="email" name="email"
-               placeholder="Enter your email" required>
-        <br><br>
+        <div class="field">
+            <label for="phone">Mobile number</label>
+            <input id="phone" type="tel" name="phone" placeholder="10-digit mobile number" required>
+        </div>
 
-        <label>Mobile Number:</label><br>
-        <input type="tel" name="phone"
-               placeholder="Enter mobile number" required>
-        <br><br>
-
-        <button type="submit">Patient Login</button>
-
+        <button type="submit">Log in</button>
+        <p class="form-note">New patient? <a href="/register.html">Register here</a></p>
     </form>
-
 </main>
 
 <footer>
-    <p>Cloud-Based Hospital Appointment System</p>
+    <div class="inner">
+        <p>Cloud-Based Hospital Appointment System</p>
+        <p>&copy; 2026 City Care Hospital</p>
+    </div>
 </footer>
 
 </body>
-
 </html>

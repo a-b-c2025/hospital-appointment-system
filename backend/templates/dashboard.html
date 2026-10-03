@@ -1,70 +1,79 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Doctor Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doctor dashboard | City Care Hospital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
-<header>
-    <h1>Doctor Dashboard</h1>
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="/index.html">
+            <span class="cross" aria-hidden="true"></span>
+            <span>City Care Hospital<small>Online appointments</small></span>
+        </a>
+        <nav aria-label="Main">
+            <a href="/index.html">Home</a>
+            <a href="/doctors.html">Doctors</a>
+            <a href="/appointment.html">Book appointment</a>
+            <a href="/my_appointments">My appointments</a>
+            <a href="/register.html">Register</a>
+            <a href="/login.html">Login</a>
+            <a href="/admin_login.html" class="active" aria-current="page">Admin</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
 </header>
 
 <main>
 
-    <h2>Appointment Requests</h2>
+    <div class="page-title">
+        <h1>Appointment requests</h1>
+        <p>Confirm or reject each request. Patients see the new status straight away.</p>
+    </div>
 
-    <table>
-
-        <tr>
-            <th>Patient Name</th>
-            <th>Doctor</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-
-        {% for appointment in appointments %}
-
-        <tr>
-
-            <td>{{ appointment[1] }}</td>
-
-            <td>{{ appointment[2] }}</td>
-
-            <td>{{ appointment[3] }}</td>
-
-            <td>{{ appointment[4] }}</td>
-
-            <td>{{ appointment[5] }}</td>
-
-            <td>
-
-                <a href="/update_appointment/{{ appointment[0] }}/Confirmed">
-                    <button>Confirm</button>
-                </a>
-
-                <a href="/update_appointment/{{ appointment[0] }}/Rejected">
-                    <button>Reject</button>
-                </a>
-
-            </td>
-
-        </tr>
-
-        {% endfor %}
-
-    </table>
-
+    <div class="table-wrap">
+        {% if appointments %}
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment[1] }}</td>
+                <td>{{ appointment[2] }}</td>
+                <td>{{ appointment[3] }}</td>
+                <td>{{ (appointment[4]|string)[:-3] }}</td>
+                <td><span class="status status-{{ appointment[5]|lower }}">{{ appointment[5] }}</span></td>
+                <td>
+                    <a class="btn" href="/update_appointment/{{ appointment[0] }}/Confirmed">Confirm</a>
+                    <a class="btn reject" href="/update_appointment/{{ appointment[0] }}/Rejected">Reject</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p class="empty">No appointment requests yet.</p>
+        {% endif %}
+    </div>
 </main>
 
 <footer>
-    <p>Cloud-Based Hospital Appointment System</p>
+    <div class="inner">
+        <p>Cloud-Based Hospital Appointment System</p>
+        <p>&copy; 2026 City Care Hospital</p>
+    </div>
 </footer>
 
 </body>
-
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }} | City Care Hospital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="/index.html">
+            <span class="cross" aria-hidden="true"></span>
+            <span>City Care Hospital<small>Online appointments</small></span>
+        </a>
+        <nav aria-label="Main">
+            <a href="/index.html">Home</a>
+            <a href="/doctors.html">Doctors</a>
+            <a href="/appointment.html">Book appointment</a>
+            <a href="/my_appointments">My appointments</a>
+            <a href="/register.html">Register</a>
+            <a href="/login.html">Login</a>
+            <a href="/admin_login.html">Admin</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <div class="message{% if error %} error{% endif %}">
+        <h1>{{ title }}</h1>
+        <p>{{ text }}</p>
+        <div class="actions">
+            {% for label, link in buttons %}
+            <a class="btn{% if not loop.first %} secondary{% endif %}" href="{{ link }}">{{ label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="inner">
+        <p>Cloud-Based Hospital Appointment System</p>
+        <p>&copy; 2026 City Care Hospital</p>
+    </div>
+</footer>
+
+</body>
+</html>

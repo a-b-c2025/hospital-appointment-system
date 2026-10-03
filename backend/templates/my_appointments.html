@@ -1,60 +1,77 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>My Appointments</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My appointments | City Care Hospital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
-<header>
-    <h1>My Appointments</h1>
-
-    <nav>
-        <a href="/index.html">Home</a>
-        <a href="/my_appointments">My Appointments</a>
-    </nav>
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="/index.html">
+            <span class="cross" aria-hidden="true"></span>
+            <span>City Care Hospital<small>Online appointments</small></span>
+        </a>
+        <nav aria-label="Main">
+            <a href="/index.html">Home</a>
+            <a href="/doctors.html">Doctors</a>
+            <a href="/appointment.html">Book appointment</a>
+            <a href="/my_appointments" class="active" aria-current="page">My appointments</a>
+            <a href="/register.html">Register</a>
+            <a href="/login.html">Login</a>
+            <a href="/admin_login.html">Admin</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
 </header>
 
 <main>
 
-    <h2>Appointment Details</h2>
+    <div class="page-title">
+        <h1>My appointments</h1>
+        <p>Signed in as {{ patient_name }}.</p>
+    </div>
 
-    <table>
+    <div class="table-wrap">
+        {% if appointments %}
+        <table>
+            <tr>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment[0] }}</td>
+                <td>{{ appointment[1] }}</td>
+                <td>{{ (appointment[2]|string)[:-3] }}</td>
+                <td><span class="status status-{{ appointment[3]|lower }}">{{ appointment[3] }}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p class="empty">You have no appointments yet. Book one to see it here.</p>
+        {% endif %}
+    </div>
 
-        <tr>
-            <th>Doctor</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-        </tr>
-
-        {% for appointment in appointments %}
-
-        <tr>
-            <td>{{ appointment[0] }}</td>
-            <td>{{ appointment[1] }}</td>
-            <td>{{ appointment[2] }}</td>
-            <td>{{ appointment[3] }}</td>
-        </tr>
-
-        {% endfor %}
-
-    </table>
-
-    <br>
-
-    <a href="/appointment.html">
-        <button>Book New Appointment</button>
-    </a>
-
+    <div class="actions below-table">
+        <a class="btn" href="/appointment.html">Book a new appointment</a>
+        <a class="btn secondary" href="/logout">Log out</a>
+    </div>
 </main>
 
 <footer>
-    <p>Cloud-Based Hospital Appointment System</p>
+    <div class="inner">
+        <p>Cloud-Based Hospital Appointment System</p>
+        <p>&copy; 2026 City Care Hospital</p>
+    </div>
 </footer>
 
 </body>
-
 </html>

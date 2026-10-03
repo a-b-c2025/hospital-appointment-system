@@ -10,6 +10,12 @@ app = Flask(__name__, static_folder=os.path.join(PROJECT_DIR, "static"), static_
 app.secret_key = os.environ.get("SECRET_KEY", "hospital123")
 
 
+def message_page(title, text, buttons, error=False):
+    """Styled success / error page (templates/message.html)."""
+    return render_template("message.html", title=title, text=text,
+                           buttons=buttons, error=error)
+
+
 # ---------------- HTML PAGES (index.html, login.html, appointment.html ...) ----------------
 
 @app.route("/<page>.html")
@@ -76,35 +82,7 @@ def register():
     cursor.close()
     connection.close()
 
-    return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Registration Successful</title>
-            <link rel="stylesheet" href="/static/style.css">
-        </head>
-        <body>
-
-            <header>
-                <h1>Cloud Hospital Appointment System</h1>
-            </header>
-
-            <main>
-                <h2>Registration successful!</h2>
-                <p>Your account has been created. You can now log in.</p>
-
-                <a href="/login.html">
-                    <button>Go to Login</button>
-                </a>
-            </main>
-
-            <footer>
-                <p>Cloud-Based Hospital Appointment System</p>
-            </footer>
-
-        </body>
-        </html>
-    """
+    return message_page("Registration successful", "Your account is ready. Log in with your email and mobile number.", [("Log in", "/login.html"), ("Back to home", "/index.html")])
 
 
 # ---------------- LOGIN ----------------
@@ -132,49 +110,12 @@ def login():
     connection.close()
 
     if patient is None:
-        return """
-            <h2>Invalid Email or Mobile Number.</h2>
-            <br>
-            <a href="/login.html">
-                Try Again
-            </a>
-        """
+        return message_page("Login failed", "No patient matches that email and mobile number. Check both and try again, or register if you are new.", [("Try again", "/login.html"), ("Register", "/register.html")], error=True)
 
     session["patient_id"] = patient[0]
     session["patient_name"] = patient[1]
 
-    return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Login Successful</title>
-            <link rel="stylesheet" href="/static/style.css">
-        </head>
-        <body>
-
-            <header>
-                <h1>Cloud Hospital Appointment System</h1>
-            </header>
-
-            <main>
-                <h2>Login successful!</h2>
-                <p>Welcome! You are now logged in.</p>
-
-                <a href="/index.html">
-                    <button>Go to Home Page</button>
-                </a>
-                <a href="/my_appointments">
-                    <button>View My Appointments</button>
-                </a>
-            </main>
-
-            <footer>
-                <p>Cloud-Based Hospital Appointment System</p>
-            </footer>
-
-        </body>
-        </html>
-    """
+    return message_page("Welcome, " + str(patient[1]), "You are logged in. Book a new appointment or check the status of your existing ones.", [("Book an appointment", "/appointment.html"), ("My appointments", "/my_appointments")])
 
 
 # ---------------- BOOK APPOINTMENT ----------------
@@ -211,7 +152,7 @@ def book_appointment():
             cursor.close()
             connection.close()
 
-            return "Patient not found. Please register first."
+            return message_page("Patient not found", "No registered patient has that name. Use the exact name you registered with, or register first.", [("Register", "/register.html"), ("Try again", "/appointment.html")], error=True)
 
         patient_id = patient[0]
 
@@ -234,7 +175,7 @@ def book_appointment():
         cursor.close()
         connection.close()
 
-        return "Doctor not found."
+        return message_page("Doctor not found", "Choose a doctor from the list and try again.", [("Try again", "/appointment.html")], error=True)
 
     doctor_id = doctor[0]
 
@@ -279,13 +220,7 @@ def my_appointments():
     patient_id = session.get("patient_id")
 
     if patient_id is None:
-        return """
-            <h2>Please login first.</h2>
-            <br>
-            <a href="/login.html">
-                Go to Login
-            </a>
-        """
+        return message_page("Please log in first", "Log in with your email and mobile number to see your appointments.", [("Log in", "/login.html"), ("Register", "/register.html")], error=True)
 
     connection = get_db_connection()
     cursor = connection.cursor()
@@ -362,7 +297,7 @@ def doctor_dashboard():
 def update_appointment(appointment_id, status):
 
     if status not in ["Confirmed", "Rejected"]:
-        return "Invalid status."
+        return message_page("Invalid status", "An appointment can only be Confirmed or Rejected.", [("Back to dashboard", "/doctor_dashboard")], error=True)
 
     connection = get_db_connection()
     cursor = connection.cursor()
@@ -393,35 +328,7 @@ def logout():
 
     session.clear()
 
-    return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Logout Successful</title>
-            <link rel="stylesheet" href="/static/style.css">
-        </head>
-        <body>
-
-            <header>
-                <h1>Cloud Hospital Appointment System</h1>
-            </header>
-
-            <main>
-                <h2>Logout successful!</h2>
-                <p>You have been logged out safely.</p>
-
-                <a href="/index.html">
-                    <button>Go to Home Page</button>
-                </a>
-            </main>
-
-            <footer>
-                <p>Cloud-Based Hospital Appointment System</p>
-            </footer>
-
-        </body>
-        </html>
-    """
+    return message_page("You are logged out", "You have been logged out safely.", [("Back to home", "/index.html"), ("Log in again", "/login.html")])
 
 
 # ---------------- ADMIN LOGIN PAGE ----------------
@@ -445,13 +352,7 @@ def admin_login():
 
         return redirect(url_for("doctor_dashboard"))
 
-    return """
-        <h2>Invalid Admin Username or Password.</h2>
-        <br>
-        <a href="/admin_login.html">
-            Try Again
-        </a>
-    """
+    return message_page("Admin login failed", "The username or password is incorrect. Check both and try again.", [("Try again", "/admin_login.html")], error=True)
 
 
 # ---------------- RUN APPLICATION ----------------

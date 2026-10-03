@@ -1,79 +1,78 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Hospital Appointment System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home | City Care Hospital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
-<header>
-
-    <h1>Cloud-Based Hospital Appointment System </h1>
-
-    <nav>
-
-        <a href="/index.html">Home</a>
-
-        <a href="/doctors.html">
-            Doctors
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="/index.html">
+            <span class="cross" aria-hidden="true"></span>
+            <span>City Care Hospital<small>Online appointments</small></span>
         </a>
-
-        <a href="/appointment.html">
-            Appointment
-        </a>
-
-        <a href="/my_appointments">
-            My Appointments
-        </a>
-
-        <a href="/register.html">
-            Register
-        </a>
-
-        <a href="/login.html">
-            Login
-        </a>
-
-        <a href="/admin_login.html">
-            Admin Login
-        </a>
-
-        <a href="/logout">
-            Logout
-        </a>
-
-    </nav>
-
+        <nav aria-label="Main">
+            <a href="/index.html" class="active" aria-current="page">Home</a>
+            <a href="/doctors.html">Doctors</a>
+            <a href="/appointment.html">Book appointment</a>
+            <a href="/my_appointments">My appointments</a>
+            <a href="/register.html">Register</a>
+            <a href="/login.html">Login</a>
+            <a href="/admin_login.html">Admin</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
 </header>
 
 <main>
 
-    <h2>Welcome to Our Hospital</h2>
+    <section class="hero">
+        <div>
+            <h1>See the right doctor, without waiting in the queue.</h1>
+            <p class="lead">Book an appointment with any of our seven specialists online. You will see the doctor's decision in My appointments.</p>
+            <div class="actions">
+                <a class="btn" href="/appointment.html">Book an appointment</a>
+                <a class="btn secondary" href="/register.html">Register as a new patient</a>
+            </div>
+        </div>
 
-    <p>
-        Book your hospital appointment easily and conveniently.
-    </p>
+        <div class="visit-steps">
+            <h3>How your visit works</h3>
+            <ol>
+            <li><div><strong>Register once</strong><span>Your name, contact details and address.</span></div></li>
+            <li><div><strong>Book a time</strong><span>Choose a doctor, date and time.</span></div></li>
+            <li><div><strong>Get confirmed</strong><span>The hospital confirms or rejects your request.</span></div></li>
+            </ol>
+        </div>
+    </section>
 
-    <a href="/appointment.html">
-        <button>Book Appointment</button>
-    </a>
-
-    <a href="/login.html">
-        <button>Patient Login</button>
-    </a>
-
+    <section class="departments">
+        <h2>Our departments</h2>
+        <ul>
+            <li>Cardiologist</li>
+            <li>General Physician</li>
+            <li>Dermatologist</li>
+            <li>Pediatrician</li>
+            <li>Orthopedic</li>
+            <li>Neurologist</li>
+            <li>Dentist</li>
+        </ul>
+        <p class="form-note"><a href="/doctors.html">See doctors and their working days</a></p>
+    </section>
 </main>
 
 <footer>
-
-    <p>Cloud-Based Hospital Appointment System</p>
-
-    <p>© 2026 Hospital Appointment System</p>
-
+    <div class="inner">
+        <p>Cloud-Based Hospital Appointment System</p>
+        <p>&copy; 2026 City Care Hospital</p>
+    </div>
 </footer>
 
 </body>
-
 </html>
